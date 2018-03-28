@@ -1,0 +1,9 @@
+Android Login Application based on EMail ID and Password using Firebase.
+
+Features:
+1. Splashscreen
+2. New User Registration
+3. Email Verification
+4. Reset Password
+5. Display entire profile and image
+6. Update profile (realtime)
