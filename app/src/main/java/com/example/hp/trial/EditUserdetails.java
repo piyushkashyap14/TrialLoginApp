@@ -34,9 +34,6 @@ public class EditUserdetails extends AppCompatActivity {
         age = findViewById(R.id.etage);
         update = findViewById(R.id.btnupdate);
 
-        //arrow for going back
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
@@ -66,7 +63,6 @@ public class EditUserdetails extends AppCompatActivity {
                 String newphoneno = phoneno.getText().toString();
                 String newage = age.getText().toString();
 
-
                 UserProfile userProfile = new UserProfile(newname, newemail, newphoneno, newage);
                 databaseReference.setValue(userProfile);
 
@@ -75,17 +71,5 @@ public class EditUserdetails extends AppCompatActivity {
                 Toast.makeText(EditUserdetails.this, "Details Updated", Toast.LENGTH_SHORT).show();
             }
         });
-
-    }
-
-    // implementing back arrow to previous activity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

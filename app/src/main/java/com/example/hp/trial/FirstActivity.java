@@ -57,7 +57,7 @@ public class FirstActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance(); //get the instance of the class
 
-        //while waiting for login
+        //while waiting for login progress pop up
         progressDialog = new ProgressDialog(this);
 
         //Check if user was already logged in or not, if yes, direct him to next activity directly
@@ -102,8 +102,6 @@ public class FirstActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
-                        //Toast.makeText(FirstActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        //startActivity (new Intent(FirstActivity.this, SecondActivity.class));
                         checkEmailVerification();
                     } else {
                         Toast.makeText(FirstActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -122,7 +120,6 @@ public class FirstActivity extends AppCompatActivity {
     private void checkEmailVerification() {
         FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         Boolean emailFlag = firebaseUser.isEmailVerified();
-        
         if(emailFlag){
             finish();
             startActivity(new Intent(FirstActivity.this, SecondActivity.class));

@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="282dp"
+        android:layout_width="340dp"
         android:layout_height="86dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Welcome to             Food Street"
-        android:textSize="32sp"
+        android:text="Welcome to Login App"
         android:textAlignment="center"
+        android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

@@ -22,6 +22,7 @@
         <activity android:name=".SecondActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".ForgotPassword" />
+        <activity android:name=".EditUserdetails"/>
     </application>
 
 </manifest>

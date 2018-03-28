@@ -58,7 +58,6 @@ public class SignupActivity extends AppCompatActivity {
 
     //made it global
     private StorageReference storageReference;
-    private Uri downloadUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +74,6 @@ public class SignupActivity extends AppCompatActivity {
         Alreadyuser = (Button) findViewById(R.id.alreadysigned);
         progressBar = findViewById(R.id.progress_bar);
 
-        //arrow for going back
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         //getting instance
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -86,8 +82,6 @@ public class SignupActivity extends AppCompatActivity {
 
         //creating storage reference object
         storageReference = firebaseStorage.getReference();
-        //this may have ID as null as user has still not logged in
-        //StorageReference myref1 = storageReference.child(firebaseAuth.getUid());
 
         Signup1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,17 +89,13 @@ public class SignupActivity extends AppCompatActivity {
                 if(validate()){
                     //upload data in database
                     String user_name = Name1.getText().toString().trim();
-                    String phone_no = Phoneno.getText().toString().trim();
                     String user_password = Password1.getText().toString().trim();
 
                     firebaseAuth.createUserWithEmailAndPassword(user_name, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
-                                //Toast.makeText(SignupActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                //startActivity (new Intent(SignupActivity.this, FirstActivity.class));
                                 sendEmailVerification();
-                                //firebaseAuth.signOut();
                             }else {
                                 Toast.makeText(SignupActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                             }
@@ -182,8 +172,6 @@ public class SignupActivity extends AppCompatActivity {
                         sendUserData();
                         Toast.makeText(SignupActivity.this, "Successfully Registered and a verification mail has been sent", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
-                        //finish();
-                        //startActivity(new Intent(SignupActivity.this,FirstActivity.class));
                     }else{
                         Toast.makeText(SignupActivity.this, "Verification mail has not been sent", Toast.LENGTH_SHORT).show();
                     }
@@ -192,7 +180,7 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    //send data to database
+    //sending data to firebase database
     private void sendUserData(){
         //get the instance of firebase database, create an object for it
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -209,8 +197,6 @@ public class SignupActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //keeping the URL of the uploaded image
-                //downloadUrl = taskSnapshot.getDownloadUrl();
                 Toast.makeText(SignupActivity.this, "Upload Successful", Toast.LENGTH_SHORT).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -230,16 +216,5 @@ public class SignupActivity extends AppCompatActivity {
 
         UserProfile userProfile = new UserProfile(username,name,phoneno,age);
         myref.setValue(userProfile);
-    }
-
-    // implementing back arrow to previous activity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

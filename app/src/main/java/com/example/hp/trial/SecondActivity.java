@@ -31,14 +31,12 @@ import com.squareup.picasso.Picasso;
 
 public class SecondActivity extends AppCompatActivity {
 
-    private TextView name, email, phoneno, age, url1;
+    private TextView name, email, phoneno, age;
     private ImageView profilepic;
     private Button editprofile,btnLogout;
-    private FirebaseAuth firebaseAuth; //Object created for getting instance of firebaseauth class
-    private FirebaseDatabase firebaseDatabase; //Object created for getting instance of firebasedatabase class
-    private FirebaseStorage firebaseStorage;
-    private StorageReference storageReference;
-    private Uri downloadUrl;
+    private FirebaseAuth firebaseAuth; //variable created for FirebaseAuth class
+    private FirebaseDatabase firebaseDatabase; //Variable created for FirebaseDatabase class
+    private FirebaseStorage firebaseStorage; //Variable created for FirebaseStorage class
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +48,13 @@ public class SecondActivity extends AppCompatActivity {
         email = findViewById(R.id.tvemail);
         phoneno = findViewById(R.id.tvphoneno);
         age = findViewById(R.id.tvage);
-        url1 = findViewById(R.id.tvurl);
         editprofile = findViewById(R.id.btneditprofile);
         btnLogout = findViewById(R.id.btn_logout);
-
-        //arrow for going back
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //getting instances
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
-
-        //creating storage reference object
-        //storageReference = firebaseStorage.getReference();
-
-        //getting reference of the database from where we are going to pull the data
-        DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
 
         //getting reference to the image in storage
         String ab = firebaseAuth.getUid().toString().trim();
@@ -79,6 +67,9 @@ public class SecondActivity extends AppCompatActivity {
                 .using(new FirebaseImageLoader())
                 .load(imageReference)
                 .into(profilepic);
+
+        //getting reference of the database from where we are going to pull the data
+        DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -96,6 +87,13 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
+        editprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SecondActivity.this, EditUserdetails.class));
+            }
+        });
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,17 +102,6 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(new Intent(SecondActivity.this,FirstActivity.class));
             }
         });
-    }
-
-    // implementing back arrow to previous activity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

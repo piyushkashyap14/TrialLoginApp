@@ -29,9 +29,6 @@ public class ForgotPassword extends AppCompatActivity {
         PasswordEmail = findViewById(R.id.etpasswordemail);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //arrow for going back
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         ResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,16 +52,5 @@ public class ForgotPassword extends AppCompatActivity {
 
             }
         });
-    }
-
-    // implementing back arrow to previous activity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
